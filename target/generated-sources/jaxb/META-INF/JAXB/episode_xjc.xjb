@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="3.0" xmlns="https://jakarta.ee/xml/ns/jaxb">
+  <!--
+
+Este archivo ha sido generado por Eclipse Implementation of JAXB v3.0.0 
+Visite https://eclipse-ee4j.github.io/jaxb-ri 
+Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
+Generado el: 2024.05.30 a las 11:48:19 AM CST 
+
+  -->
+  <bindings scd="x-schema::tns" xmlns:tns="t4is.uv.mx/inventario">
+    <schemaBindings map="false">
+      <package name="mx.uv.t4is.inventario"/>
+    </schemaBindings>
+    <bindings scd="tns:RecuperarFacturaResponse">
+      <class ref="mx.uv.t4is.inventario.RecuperarFacturaResponse"/>
+    </bindings>
+    <bindings scd="tns:ConsultarFolioResponse">
+      <class ref="mx.uv.t4is.inventario.ConsultarFolioResponse"/>
+    </bindings>
+    <bindings scd="tns:GenerarFolioResponse">
+      <class ref="mx.uv.t4is.inventario.GenerarFolioResponse"/>
+    </bindings>
+    <bindings scd="tns:RecuperarFacturaRequest">
+      <class ref="mx.uv.t4is.inventario.RecuperarFacturaRequest"/>
+    </bindings>
+    <bindings scd="tns:ConsultarFolioRequest">
+      <class ref="mx.uv.t4is.inventario.ConsultarFolioRequest"/>
+    </bindings>
+    <bindings scd="tns:GenerarFolioRequest">
+      <class ref="mx.uv.t4is.inventario.GenerarFolioRequest"/>
+    </bindings>
+  </bindings>
+</bindings>
+
