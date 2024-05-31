@@ -3,6 +3,7 @@ package mx.uv.Inventario;
 import org.springframework.context.annotation.Bean;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
+@Configuration
 public class FacturaConfig {
     @Bean
     public Jaxb2Marshaller marshaller(){
