@@ -10,11 +10,17 @@ import xx.mx.uv.consumo.wsdl.ConsultarFacturaResponse;
 public class FacturaCliente extends WebServiceGatewaySupport {
 
     public ConsultarFacturaResponse consultarFactura(String numeroFactura) {
-        ConsultarFacturaRequest request = new ConsultarFacturaRequest();
+        try{
+            ConsultarFacturaRequest request = new ConsultarFacturaRequest();
         request.setNumFactura(numeroFactura);
-        ConsultarFacturaResponse response = (ConsultarFacturaResponse) getWebServiceTemplate()
-                .marshalSendAndReceive("https://serviciofactura-production.up.railway.app/ws/factura", request,
-                        new SoapActionCallback(""));
-        return response;
+        ConsultarFacturaResponse response = (ConsultarFacturaResponse) getWebServiceTemplate().marshalSendAndReceive("https://serviciofactura-production.up.railway.app/ws/factura", request, new SoapActionCallback(""));
+            System.out.println(response);
+        return null;
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
     }
 }

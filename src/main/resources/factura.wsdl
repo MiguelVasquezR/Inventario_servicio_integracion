@@ -124,7 +124,7 @@
 
     <service name="FacturaService">
         <port name="FacturaPort" binding="tns:FacturaBinding">
-            <soap:address location="http://localhost:8080/factura"/>
+            <soap:address location="https://serviciofactura-production.up.railway.app/ws"/>
         </port>
     </service>
 
