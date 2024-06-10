@@ -108,14 +108,15 @@
 				</executions>
 				<configuration>
 					<packageName>xx.mx.uv.consumo.wsdl</packageName>
-					<!-- Especifica la ruta local del archivo WSDL remoto -->
-					<!-- <wsdlUrls>
-						<wsdlUrl>http://localhost:8080/ws/saludos.wsdl</wsdlUrl>
-					</wsdlUrls> -->
-					<wsdlFiles>
-					<!-- Especifica la ruta local del archivo WSDL local -->
-						<wsdlFile>${project.basedir}/src/main/resources/factura.wsdl</wsdlFile>
-					</wsdlFiles>
+					<!-- Especifica la ruta local del archivo WSDL remoto  -->
+					<wsdlUrls>
+						<wsdlUrl>https://facturas-production.up.railway.app/ws/facturas.wsdl</wsdlUrl>
+					</wsdlUrls>
+					
+					<!-- <wsdlFiles>
+						<wsdlFile>${project.basedir}/src/main/resources/facturas.wsdl</wsdlFile>
+					</wsdlFiles>   -->
+					
 					<sourceDestDir>${project.basedir}/src/main/java</sourceDestDir>
 				</configuration>
 			</plugin>

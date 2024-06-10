@@ -1,9 +1,7 @@
 package mx.uv.Inventario;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,142 +10,144 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import mx.uv.Inventario.Modelo.Folio;
-import mx.uv.Inventario.Modelo.Inventario;
-import mx.uv.Inventario.Modelo.Item;
-import mx.uv.Inventario.ORM.IFolio;
-import mx.uv.Inventario.ORM.IInventario;
-import mx.uv.Inventario.ORM.IItem;
-import mx.uv.t4is.inventario.ConsultarFolioRequest;
-import mx.uv.t4is.inventario.ConsultarFolioResponse;
+import mx.uv.Inventario.BD.Compra;
+import mx.uv.Inventario.BD.ICompra;
+import mx.uv.Inventario.BD.IProducto;
+import mx.uv.Inventario.BD.Producto;
+import mx.uv.Inventario.Factura.FacturaCliente;
 import mx.uv.t4is.inventario.GenerarFolioRequest;
 import mx.uv.t4is.inventario.GenerarFolioResponse;
-import mx.uv.t4is.inventario.ConsultarFolioResponse.Producto;
-import mx.uv.t4is.inventario.GenerarFolioResponse.Folios;
+import mx.uv.t4is.inventario.ObtenerFoliosRequest;
+import mx.uv.t4is.inventario.ObtenerFoliosResponse;
+import mx.uv.t4is.inventario.ValidarFolioRequest;
+import mx.uv.t4is.inventario.ValidarFolioResponse;
+import mx.uv.t4is.inventario.GenerarFolioResponse.Productos;
+import xx.mx.uv.consumo.wsdl.RecuperarFacturaResponse;
 
 @Endpoint
 public class InventarioEndPoint {
 
     @Autowired
-    private IInventario iInventario;
+    private FacturaCliente cliente;
+
     @Autowired
-    private IItem iItem;
+    private ICompra compraRepository;
+
     @Autowired
-    private IFolio iFolio;
-
-    private final List<Item> ordenesDeCompra = new ArrayList<>();
-    private final List<Item> factura = new ArrayList<>();
-
-    public InventarioEndPoint() {
-        initializeItems();
-    }
-
-    private void initializeItems() {
-        ordenesDeCompra.add(new Item("Auriculares Inalámbricos", 1, 59.99));
-        ordenesDeCompra.add(new Item("Laptop Gaming", 2, 1200.00));
-        ordenesDeCompra.add(new Item("Smartphone", 3, 699.99));
-        ordenesDeCompra.add(new Item("Mochila para Laptop", 4, 39.99));
-        ordenesDeCompra.add(new Item("Reloj Inteligente", 5, 149.99));
-
-        factura.addAll(ordenesDeCompra);
-    }
+    private IProducto productoRepository;
 
     @PayloadRoot(namespace = "t4is.uv.mx/inventario", localPart = "GenerarFolioRequest")
     @ResponsePayload
     public GenerarFolioResponse generarFolio(@RequestPayload GenerarFolioRequest request) {
         GenerarFolioResponse response = new GenerarFolioResponse();
+        RecuperarFacturaResponse facturaResponse = cliente.consultarFactura(request.getUUIDFactura()); // Tenemos la
+                                                                                                       // factura del
+                                                                                                       // servicio
 
-        try {
-            Inventario inventario = crearInventario(request);
-            iInventario.save(inventario);
-            if (ordenesDeCompra.size() == factura.size() && compararListas(ordenesDeCompra, factura)) {
-                List<Item> itemsGuardados = guardarItems(inventario, ordenesDeCompra);
-                generarFolios(response, itemsGuardados);
-            } else {
-                System.out.println("Las listas no son iguales.");
+        List<GenerarFolioRequest.Orden.Productos.Producto> listaProductosOrden = request.getOrden().getProductos()
+                .getProducto();
+        List<RecuperarFacturaResponse.Productos.Producto> listaProductoFactura = facturaResponse.getProductos()
+                .getProducto();
+
+        boolean iguales = compararListar(listaProductosOrden, listaProductoFactura);
+
+        Compra compra = new Compra();
+        compra.setId(UUID.randomUUID().toString());
+        compra.setNumFactura(facturaResponse.getUUID());
+        compra.setNumOrden(request.getOrden().getNumOrden());
+        compraRepository.save(compra);
+
+        Productos productosResponse = new Productos();
+        Productos.Producto productoResponse;
+        Producto productoBD;
+        for (RecuperarFacturaResponse.Productos.Producto producto : listaProductoFactura) {
+            productoBD = new Producto();
+            for (int i = 0; i < producto.getCantidad(); i++) {
+                productoResponse = new Productos.Producto();
+                productoResponse.setNombre(producto.getNombre());
+                productoResponse.setFolio(UUID.randomUUID().toString());
+
+                productoBD.setId(UUID.randomUUID().toString());
+                productoBD.setNombre(producto.getNombre());
+                productoBD.setCantidad(producto.getCantidad());
+                productoBD.setPrecioUnitario(producto.getPrecioUnitario());
+                productoBD.setFolio(String.valueOf(UUID.randomUUID().hashCode()));
+                productoBD.setIdCompra(request.getOrden().getNumOrden());
+                productoRepository.save(productoBD);
+
+                productosResponse.getProducto().add(productoResponse);
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        }
+
+        if (iguales) {
+            response.setMensaje("Los folios han sido creados");
+        } else {
+            response.setMensaje("Los productos de la orden no coinciden con los de la factura");
         }
 
         return response;
     }
 
+    private static boolean compararListar(List<GenerarFolioRequest.Orden.Productos.Producto> listaProductosOrden,
+            List<RecuperarFacturaResponse.Productos.Producto> listaProductoFactura) {
+        boolean iguales = true;
+        if (listaProductoFactura.size() != listaProductosOrden.size()) {
+            return false;
+        }
+        for (int i = 0; i < listaProductosOrden.size(); i++) {
+            GenerarFolioRequest.Orden.Productos.Producto orden = listaProductosOrden.get(i);
+            RecuperarFacturaResponse.Productos.Producto factura = listaProductoFactura.get(i);
+            if (!orden.getNombre().equals(factura.getNombre()) && orden.getCantidad() != factura.getCantidad()
+                    && orden.getPrecioUnitario() != factura.getPrecioUnitario()) {
+                iguales = false;
+                break;
+            }
+        }
+        return iguales;
+    }
 
-    @PayloadRoot(namespace = "t4is.uv.mx/inventario", localPart = "ConsultarFolioRequest")
+    @PayloadRoot(namespace = "t4is.uv.mx/inventario", localPart = "ObtenerFoliosRequest")
     @ResponsePayload
-    public ConsultarFolioResponse consultarFolio(@RequestPayload ConsultarFolioRequest request) {
-        ConsultarFolioResponse response = new ConsultarFolioResponse();
-        String folio = request.getFolio();
-        try{
-            Folio folioEncontrado = iFolio.findByFolio(folio);
-            if(folioEncontrado != null){
-                Item item = iItem.findById(folioEncontrado.getIdItem());
-                Producto producto = new Producto();
-                Inventario inventario = iInventario.findById(item.getIdInventario());
-                
-                producto.setNombre(item.getNombre());
-                producto.setPrecioUnitario(item.getPrecio());
-                producto.setDependencia(inventario.getDependencia());
-                response.setProducto(producto);
-            }
-        }catch(Exception e){
-            System.out.println(e);
+    public ObtenerFoliosResponse obtenerFolio(@RequestPayload ObtenerFoliosRequest request) {
+        ObtenerFoliosResponse response = new ObtenerFoliosResponse();
+        ObtenerFoliosResponse.Productos productosResponse = new ObtenerFoliosResponse.Productos();
+        response.setProductos(productosResponse);
+
+        String numOrden = request.getNumOrden();
+        Compra compra = compraRepository.findByNumOrden(numOrden);
+
+        if (compra == null) {
+            return response;
         }
+
+        List<Producto> productos = productoRepository.findByIdCompra(compra.getNumOrden());
+        if (productos != null) {
+            for (Producto producto : productos) {
+                ObtenerFoliosResponse.Productos.Producto productoResponse = new ObtenerFoliosResponse.Productos.Producto();
+                productoResponse.setNombre(producto.getNombre());
+                productoResponse.setFolio(producto.getFolio());
+                productosResponse.getProducto().add(productoResponse);
+            }
+        }
+
         return response;
     }
 
-    private Inventario crearInventario(GenerarFolioRequest request) {
-        Inventario inventario = new Inventario();
-        inventario.setId(UUID.randomUUID().toString());
-        inventario.setDependencia(request.getDependencia());
-        inventario.setNumFactura(request.getUUID());
-        inventario.setNumOrden(request.getOrdenDeCompra());
-        return inventario;
-    }
+    @PayloadRoot(namespace = "t4is.uv.mx/inventario", localPart = "ValidarFolioRequest")
+    @ResponsePayload
+    public ValidarFolioResponse validarFolio(@RequestPayload ValidarFolioRequest request){
+        ValidarFolioResponse response = new ValidarFolioResponse();
 
-    private boolean compararListas(List<Item> lista1, List<Item> lista2) {
-        Map<String, Item> mapa1 = convertirListaAMapa(lista1);
-        Map<String, Item> mapa2 = convertirListaAMapa(lista2);
+        String folio = request.getFolio();
+        Producto producto = productoRepository.findByFolio(folio);
 
-        return mapa1.equals(mapa2);
-    }
-
-    private Map<String, Item> convertirListaAMapa(List<Item> lista) {
-        Map<String, Item> mapa = new HashMap<>();
-        for (Item item : lista) {
-            String clave = item.getNombre() + "_" + item.getCantidad() + "_" + item.getPrecio();
-            mapa.put(clave, item);
+        if(producto != null){
+            response.setMensaje("El folio es válido, pertecene a " + producto.getNombre());
+        }else{
+            response.setMensaje("El folio no es válido");
         }
-        return mapa;
+
+        return response;
     }
 
-    private List<Item> guardarItems(Inventario inventario, List<Item> items) {
-        List<Item> itemsGuardados = new ArrayList<>();
-        for (Item item : items) {
-            Item nuevoItem = new Item();
-            nuevoItem.setId(UUID.randomUUID().toString());
-            nuevoItem.setNombre(item.getNombre());
-            nuevoItem.setCantidad(item.getCantidad());
-            nuevoItem.setPrecio(item.getPrecio());
-            nuevoItem.setIdInventario(inventario.getId());
-            iItem.save(nuevoItem);
-            itemsGuardados.add(nuevoItem);
-        }
-        return itemsGuardados;
-    }
-
-    private void generarFolios(GenerarFolioResponse response, List<Item> items) {
-        for (Item item : items) {
-            Folio folio = null;
-            for (int i = 0; i < item.getCantidad(); i++) {
-                Folios folioResponse = new Folios();
-                folioResponse.setFolio(UUID.randomUUID().toString());
-                folioResponse.setItem(item.getNombre());
-                response.getFolios().add(folioResponse);
-                folio = new Folio(folioResponse.getFolio(), item.getId(), UUID.randomUUID().toString());
-                iFolio.save(folio);
-            }
-        }
-    }
 }

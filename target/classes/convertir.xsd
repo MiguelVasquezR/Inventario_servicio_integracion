@@ -3,61 +3,50 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="t4is.uv.mx/inventario"
     xmlns:tns="t4is.uv.mx/inventario" elementFormDefault="qualified">
 
-    <xs:element name="RecuperarFacturaRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="UUID" type="xs:string" />
-                <xs:element name="OrdenDeCompra" type="xs:string" />
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="RecuperarFacturaResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="Factura">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="Numero" type="xs:string" />
-                            <xs:element name="Fecha" type="xs:string" />
-                            <xs:element name="Total" type="xs:string" />
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="ConsultarFolioRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="Folio" type="xs:string" />
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="ConsultarFolioResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="Producto">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="Nombre" type="xs:string" />
-                            <xs:element name="Dependencia" type="xs:string" />
-                            <xs:element name="PrecioUnitario" type="xs:double" />
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
     <xs:element name="GenerarFolioRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="UUID" type="xs:string" />
-                <xs:element name="OrdenDeCompra" type="xs:string" />
-                <xs:element name="Dependencia" type="xs:string" />
+                <xs:element name="UUIDFactura" type="xs:string" />
+                <xs:element name="Orden">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Productos">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Producto" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="Nombre" type="xs:string" />
+                                                    <xs:element name="Cantidad" type="xs:double" />
+                                                    <xs:element name="PrecioUnitario" type="xs:double" />
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="PrecioTotal" type="xs:string" />
+                            <xs:element name="NumOrden" type="xs:string" />
+                            <xs:element name="FechaCompra" type="xs:string" />
+                            <xs:element name="InformacionComprador">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Nombre" type="xs:string" />
+                                        <xs:element name="Direccion" type="xs:string" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="InformacionVendedor">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Nombre" type="xs:string" />
+                                        <xs:element name="Direccion" type="xs:string" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -65,11 +54,18 @@
     <xs:element name="GenerarFolioResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Folios" maxOccurs="unbounded">
+                <xs:element name="Mensaje" type="xs:string" />
+                <xs:element name="Productos">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="Folio" type="xs:string" />
-                            <xs:element name="Item" type="xs:string" />
+                            <xs:element name="Producto" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Nombre" type="xs:string" />
+                                        <xs:element name="Folio" type="xs:string" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -77,6 +73,50 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="ObtenerFoliosRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="NumOrden" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ObtenerFoliosResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Productos">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Producto" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Nombre" type="xs:string" />
+                                        <xs:element name="Folio" type="xs:string" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ValidarFolioRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Folio" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ValidarFolioResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Mensaje" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
 
 </xs:schema>

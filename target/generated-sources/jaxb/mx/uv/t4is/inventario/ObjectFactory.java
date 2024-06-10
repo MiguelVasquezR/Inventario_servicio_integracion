@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por Eclipse Implementation of JAXB v3.0.0 
 // Visite https://eclipse-ee4j.github.io/jaxb-ri 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2024.05.30 a las 01:55:21 PM CST 
+// Generado el: 2024.06.10 a las 04:17:23 PM CST 
 //
 
 
@@ -37,19 +37,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RecuperarFacturaResponse }
+     * Create an instance of {@link GenerarFolioRequest }
      * 
      */
-    public RecuperarFacturaResponse createRecuperarFacturaResponse() {
-        return new RecuperarFacturaResponse();
-    }
-
-    /**
-     * Create an instance of {@link ConsultarFolioResponse }
-     * 
-     */
-    public ConsultarFolioResponse createConsultarFolioResponse() {
-        return new ConsultarFolioResponse();
+    public GenerarFolioRequest createGenerarFolioRequest() {
+        return new GenerarFolioRequest();
     }
 
     /**
@@ -61,51 +53,107 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RecuperarFacturaRequest }
+     * Create an instance of {@link ObtenerFoliosResponse }
      * 
      */
-    public RecuperarFacturaRequest createRecuperarFacturaRequest() {
-        return new RecuperarFacturaRequest();
+    public ObtenerFoliosResponse createObtenerFoliosResponse() {
+        return new ObtenerFoliosResponse();
     }
 
     /**
-     * Create an instance of {@link RecuperarFacturaResponse.Factura }
+     * Create an instance of {@link ObtenerFoliosResponse.Productos }
      * 
      */
-    public RecuperarFacturaResponse.Factura createRecuperarFacturaResponseFactura() {
-        return new RecuperarFacturaResponse.Factura();
+    public ObtenerFoliosResponse.Productos createObtenerFoliosResponseProductos() {
+        return new ObtenerFoliosResponse.Productos();
     }
 
     /**
-     * Create an instance of {@link ConsultarFolioRequest }
+     * Create an instance of {@link GenerarFolioResponse.Productos }
      * 
      */
-    public ConsultarFolioRequest createConsultarFolioRequest() {
-        return new ConsultarFolioRequest();
+    public GenerarFolioResponse.Productos createGenerarFolioResponseProductos() {
+        return new GenerarFolioResponse.Productos();
     }
 
     /**
-     * Create an instance of {@link ConsultarFolioResponse.Producto }
+     * Create an instance of {@link GenerarFolioRequest.Orden }
      * 
      */
-    public ConsultarFolioResponse.Producto createConsultarFolioResponseProducto() {
-        return new ConsultarFolioResponse.Producto();
+    public GenerarFolioRequest.Orden createGenerarFolioRequestOrden() {
+        return new GenerarFolioRequest.Orden();
     }
 
     /**
-     * Create an instance of {@link GenerarFolioRequest }
+     * Create an instance of {@link GenerarFolioRequest.Orden.Productos }
      * 
      */
-    public GenerarFolioRequest createGenerarFolioRequest() {
-        return new GenerarFolioRequest();
+    public GenerarFolioRequest.Orden.Productos createGenerarFolioRequestOrdenProductos() {
+        return new GenerarFolioRequest.Orden.Productos();
     }
 
     /**
-     * Create an instance of {@link GenerarFolioResponse.Folios }
+     * Create an instance of {@link ObtenerFoliosRequest }
      * 
      */
-    public GenerarFolioResponse.Folios createGenerarFolioResponseFolios() {
-        return new GenerarFolioResponse.Folios();
+    public ObtenerFoliosRequest createObtenerFoliosRequest() {
+        return new ObtenerFoliosRequest();
+    }
+
+    /**
+     * Create an instance of {@link ValidarFolioRequest }
+     * 
+     */
+    public ValidarFolioRequest createValidarFolioRequest() {
+        return new ValidarFolioRequest();
+    }
+
+    /**
+     * Create an instance of {@link ValidarFolioResponse }
+     * 
+     */
+    public ValidarFolioResponse createValidarFolioResponse() {
+        return new ValidarFolioResponse();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerFoliosResponse.Productos.Producto }
+     * 
+     */
+    public ObtenerFoliosResponse.Productos.Producto createObtenerFoliosResponseProductosProducto() {
+        return new ObtenerFoliosResponse.Productos.Producto();
+    }
+
+    /**
+     * Create an instance of {@link GenerarFolioResponse.Productos.Producto }
+     * 
+     */
+    public GenerarFolioResponse.Productos.Producto createGenerarFolioResponseProductosProducto() {
+        return new GenerarFolioResponse.Productos.Producto();
+    }
+
+    /**
+     * Create an instance of {@link GenerarFolioRequest.Orden.InformacionComprador }
+     * 
+     */
+    public GenerarFolioRequest.Orden.InformacionComprador createGenerarFolioRequestOrdenInformacionComprador() {
+        return new GenerarFolioRequest.Orden.InformacionComprador();
+    }
+
+    /**
+     * Create an instance of {@link GenerarFolioRequest.Orden.InformacionVendedor }
+     * 
+     */
+    public GenerarFolioRequest.Orden.InformacionVendedor createGenerarFolioRequestOrdenInformacionVendedor() {
+        return new GenerarFolioRequest.Orden.InformacionVendedor();
+    }
+
+    /**
+     * Create an instance of {@link GenerarFolioRequest.Orden.Productos.Producto }
+     * 
+     */
+    public GenerarFolioRequest.Orden.Productos.Producto createGenerarFolioRequestOrdenProductosProducto() {
+        return new GenerarFolioRequest.Orden.Productos.Producto();
     }
 
 }

@@ -30,67 +30,107 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CrearFacturaRequest }
+     * Create an instance of {@link GenerarFacturaRequest }
      * 
      */
-    public CrearFacturaRequest createCrearFacturaRequest() {
-        return new CrearFacturaRequest();
+    public GenerarFacturaRequest createGenerarFacturaRequest() {
+        return new GenerarFacturaRequest();
     }
 
     /**
-     * Create an instance of {@link ReceptorType }
+     * Create an instance of {@link GenerarFacturaResponse }
      * 
      */
-    public ReceptorType createReceptorType() {
-        return new ReceptorType();
+    public GenerarFacturaResponse createGenerarFacturaResponse() {
+        return new GenerarFacturaResponse();
     }
 
     /**
-     * Create an instance of {@link EmisorType }
+     * Create an instance of {@link RecuperarFacturaResponse }
      * 
      */
-    public EmisorType createEmisorType() {
-        return new EmisorType();
+    public RecuperarFacturaResponse createRecuperarFacturaResponse() {
+        return new RecuperarFacturaResponse();
     }
 
     /**
-     * Create an instance of {@link ProductoType }
+     * Create an instance of {@link RecuperarFacturaResponse.Productos }
      * 
      */
-    public ProductoType createProductoType() {
-        return new ProductoType();
+    public RecuperarFacturaResponse.Productos createRecuperarFacturaResponseProductos() {
+        return new RecuperarFacturaResponse.Productos();
     }
 
     /**
-     * Create an instance of {@link CrearFacturaResponse }
+     * Create an instance of {@link GenerarFacturaResponse.Productos }
      * 
      */
-    public CrearFacturaResponse createCrearFacturaResponse() {
-        return new CrearFacturaResponse();
+    public GenerarFacturaResponse.Productos createGenerarFacturaResponseProductos() {
+        return new GenerarFacturaResponse.Productos();
     }
 
     /**
-     * Create an instance of {@link ConsultarFacturaRequest }
+     * Create an instance of {@link GenerarFacturaRequest.Productos }
      * 
      */
-    public ConsultarFacturaRequest createConsultarFacturaRequest() {
-        return new ConsultarFacturaRequest();
+    public GenerarFacturaRequest.Productos createGenerarFacturaRequestProductos() {
+        return new GenerarFacturaRequest.Productos();
     }
 
     /**
-     * Create an instance of {@link ConsultarFacturaResponse }
+     * Create an instance of {@link GenerarFacturaRequest.DatosVendedor }
      * 
      */
-    public ConsultarFacturaResponse createConsultarFacturaResponse() {
-        return new ConsultarFacturaResponse();
+    public GenerarFacturaRequest.DatosVendedor createGenerarFacturaRequestDatosVendedor() {
+        return new GenerarFacturaRequest.DatosVendedor();
     }
 
     /**
-     * Create an instance of {@link DetalleProductoType }
+     * Create an instance of {@link GenerarFacturaResponse.DatosVendedor }
      * 
      */
-    public DetalleProductoType createDetalleProductoType() {
-        return new DetalleProductoType();
+    public GenerarFacturaResponse.DatosVendedor createGenerarFacturaResponseDatosVendedor() {
+        return new GenerarFacturaResponse.DatosVendedor();
+    }
+
+    /**
+     * Create an instance of {@link RecuperarFacturaRequest }
+     * 
+     */
+    public RecuperarFacturaRequest createRecuperarFacturaRequest() {
+        return new RecuperarFacturaRequest();
+    }
+
+    /**
+     * Create an instance of {@link RecuperarFacturaResponse.DatosVendedor }
+     * 
+     */
+    public RecuperarFacturaResponse.DatosVendedor createRecuperarFacturaResponseDatosVendedor() {
+        return new RecuperarFacturaResponse.DatosVendedor();
+    }
+
+    /**
+     * Create an instance of {@link RecuperarFacturaResponse.Productos.Producto }
+     * 
+     */
+    public RecuperarFacturaResponse.Productos.Producto createRecuperarFacturaResponseProductosProducto() {
+        return new RecuperarFacturaResponse.Productos.Producto();
+    }
+
+    /**
+     * Create an instance of {@link GenerarFacturaResponse.Productos.Producto }
+     * 
+     */
+    public GenerarFacturaResponse.Productos.Producto createGenerarFacturaResponseProductosProducto() {
+        return new GenerarFacturaResponse.Productos.Producto();
+    }
+
+    /**
+     * Create an instance of {@link GenerarFacturaRequest.Productos.Producto }
+     * 
+     */
+    public GenerarFacturaRequest.Productos.Producto createGenerarFacturaRequestProductosProducto() {
+        return new GenerarFacturaRequest.Productos.Producto();
     }
 
 }

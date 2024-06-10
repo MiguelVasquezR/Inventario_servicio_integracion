@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="3.0" xmlns="https://jakarta.ee/xml/ns/jaxb">
+  <!--
+
+Este archivo ha sido generado por Eclipse Implementation of JAXB v3.0.0 
+Visite https://eclipse-ee4j.github.io/jaxb-ri 
+Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
+Generado el: 2024.06.10 a las 04:17:23 PM CST 
+
+  -->
+  <bindings scd="x-schema::tns" xmlns:tns="t4is.uv.mx/inventario">
+    <schemaBindings map="false">
+      <package name="mx.uv.t4is.inventario"/>
+    </schemaBindings>
+    <bindings scd="tns:GenerarFolioRequest">
+      <class ref="mx.uv.t4is.inventario.GenerarFolioRequest"/>
+    </bindings>
+    <bindings scd="tns:GenerarFolioResponse">
+      <class ref="mx.uv.t4is.inventario.GenerarFolioResponse"/>
+    </bindings>
+    <bindings scd="tns:ObtenerFoliosResponse">
+      <class ref="mx.uv.t4is.inventario.ObtenerFoliosResponse"/>
+    </bindings>
+    <bindings scd="tns:ObtenerFoliosRequest">
+      <class ref="mx.uv.t4is.inventario.ObtenerFoliosRequest"/>
+    </bindings>
+    <bindings scd="tns:ValidarFolioRequest">
+      <class ref="mx.uv.t4is.inventario.ValidarFolioRequest"/>
+    </bindings>
+    <bindings scd="tns:ValidarFolioResponse">
+      <class ref="mx.uv.t4is.inventario.ValidarFolioResponse"/>
+    </bindings>
+  </bindings>
+</bindings>
+
